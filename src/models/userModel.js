@@ -25,7 +25,19 @@ async function createUser({ nome, email, senha_hash, tipo }) {
   };
 }
 
+async function findUserByEmail(email) {
+  const [rows] = await pool.query(
+    `SELECT id, nome, email, senha_hash, tipo, created_at
+     FROM usuarios
+     WHERE email = ?`,
+    [email]
+  );
+
+  return rows[0] || null;
+}
+
 module.exports = {
   findAllUsers,
   createUser,
+  findUserByEmail,
 };
