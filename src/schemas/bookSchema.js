@@ -25,6 +25,16 @@ const createBookSchema = z.object({
     .optional(),
 });
 
+const updateBookSchema = createBookSchema;
+
+const bookIdParamSchema = z.object({
+  id: z
+    .string()
+    .regex(/^\d+$/, "O id do livro deve ser um numero inteiro positivo"),
+});
+
 module.exports = {
   createBookSchema,
+  updateBookSchema,
+  bookIdParamSchema,
 };

@@ -40,7 +40,43 @@ async function createBook({ titulo, autor, ano_publicacao, categoria_id, status 
   };
 }
 
+async function updateBookById(
+  id,
+  { titulo, autor, ano_publicacao, categoria_id, status }
+) {
+  const normalizedStatus = status || "disponivel";
+  const normalizedCategoriaId =
+    typeof categoria_id === "number" ? categoria_id : null;
+
+  const [result] = await pool.query(
+    `UPDATE livros
+     SET titulo = ?, autor = ?, ano_publicacao = ?, categoria_id = ?, status = ?
+     WHERE id = ?`,
+    [titulo, autor, ano_publicacao, normalizedCategoriaId, normalizedStatus, id]
+  );
+
+  return {
+    affectedRows: result.affectedRows,
+    livro: {
+      id: Number(id),
+      titulo,
+      autor,
+      ano_publicacao,
+      categoria_id: normalizedCategoriaId,
+      status: normalizedStatus,
+    },
+  };
+}
+
+async function deleteBookById(id) {
+  const [result] = await pool.query("DELETE FROM livros WHERE id = ?", [id]);
+
+  return result.affectedRows;
+}
+
 module.exports = {
   findAllBooks,
   createBook,
+  updateBookById,
+  deleteBookById,
 };
