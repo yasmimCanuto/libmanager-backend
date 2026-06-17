@@ -18,12 +18,6 @@ async function registerUser(req, res) {
   try {
     const { nome, email, senha, tipo } = req.body;
 
-    if (!nome || !email || !senha) {
-      return res.status(400).json({
-        message: "Nome, email e senha sao obrigatorios",
-      });
-    }
-
     const senhaHash = await bcrypt.hash(senha, 10);
 
     const newUser = await createUser({

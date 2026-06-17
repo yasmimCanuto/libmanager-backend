@@ -7,12 +7,6 @@ async function login(req, res) {
   try {
     const { email, senha } = req.body;
 
-    if (!email || !senha) {
-      return res.status(400).json({
-        message: "Email e senha sao obrigatorios",
-      });
-    }
-
     const user = await findUserByEmail(email);
 
     if (!user) {
