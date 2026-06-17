@@ -1,3 +1,4 @@
+const bcrypt = require("bcrypt");
 const { createUser, findAllUsers } = require("../models/userModel");
 
 async function listUsers(_req, res) {
@@ -23,10 +24,12 @@ async function registerUser(req, res) {
       });
     }
 
+    const senhaHash = await bcrypt.hash(senha, 10);
+
     const newUser = await createUser({
       nome,
       email,
-      senha_hash: senha,
+      senha_hash: senhaHash,
       tipo: tipo || "bibliotecario",
     });
 
