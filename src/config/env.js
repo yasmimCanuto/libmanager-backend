@@ -9,5 +9,9 @@ module.exports = {
   dbUser: process.env.DB_USER || "root",
   dbPassword: process.env.DB_PASSWORD || "",
   dbName: process.env.DB_NAME || "libmanager",
+  dbSsl: process.env.DB_SSL === "true",
+  dbSslRejectUnauthorized:
+    process.env.DB_SSL_REJECT_UNAUTHORIZED !== "false",
+  dbSslCa: process.env.DB_SSL_CA || "",
   jwtSecret: process.env.JWT_SECRET || "dev_secret",
 };
